@@ -3,11 +3,12 @@ import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_treeview/tree_view.dart';
-import 'package:pbz/repo.dart';
+import 'package:pbz/repository/class.dart';
+import 'package:pbz/repository/repo.dart';
 import 'package:pbz/view_class.dart';
 import 'package:uuid/uuid.dart';
 
-import 'ontology.dart';
+import 'ontology/ontology.dart';
 
 class AddClassState extends StatefulWidget {
   final List<Node> nodes;
@@ -34,7 +35,7 @@ class _AddClassState extends State<AddClassState> {
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  ViewClassState(key: UniqueKey(), node: node)));
+                  ViewClassState(key: UniqueKey(), classId: node.data.id)));
     });
   }
 

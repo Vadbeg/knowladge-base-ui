@@ -1,8 +1,9 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:pbz/repository/repo.dart';
 
-import 'ontology.dart';
+import '../ontology/ontology.dart';
 
 Future<List<OntologyClass>> fetchClasses() async {
   final response = await http.get(Uri.http('localhost:9999', '/classes'));
@@ -14,8 +15,7 @@ Future<List<OntologyClass>> fetchClasses() async {
 }
 
 void deleteClass(String id) async {
-  final response =
-      await http.delete(Uri.http('localhost:9999', '/class/' + id));
+  final response = await http.delete(Uri.http(defaultUrl, '/class/' + id));
   if (response.statusCode == 200) {
     return;
   } else {
@@ -23,22 +23,11 @@ void deleteClass(String id) async {
   }
 }
 
-class CreateClassRequest {
-  final OntologyClass parent;
-
-  CreateClassRequest(this.parent);
-
-  Map<String, dynamic> toJson() => {
-        'parent': parent.toJson(),
-      };
-}
-
 Future<String> createRootClass(OntologyClass ontologyClass) async {
   final requestBody = jsonEncode(ontologyClass.toJson());
   var req = "{\"parent\":$requestBody}";
   print(requestBody);
-  final response =
-      await http.post(Uri.http('localhost:9999', '/class'), body: req);
+  final response = await http.post(Uri.http(defaultUrl, '/class'), body: req);
   if (response.statusCode == 200) {
     Map<String, dynamic> res = jsonDecode(response.body);
     return res["uid"];
@@ -52,11 +41,21 @@ Future<String> createSubClass(
   final parentClassJson = jsonEncode(parentClass.toJson());
   final childClassJson = jsonEncode(child.toJson());
   final req = "{\"parent\":$parentClassJson,\"subclass\":$childClassJson}";
-  final response =
-      await http.post(Uri.http('localhost:9999', '/class'), body: req);
+  final response = await http.post(Uri.http(defaultUrl, '/class'), body: req);
   if (response.statusCode == 200) {
-    return response.body;
+    Map<String, dynamic> res = jsonDecode(response.body);
+    return res["uid"];
   } else {
     throw Exception('Failed to create root class');
+  }
+}
+
+Future<OntologyClass> getClass(String id) async {
+  final response = await http.get(Uri.http(defaultUrl, '/class/' + id));
+  if (response.statusCode == 200) {
+    Map<String, dynamic> res = jsonDecode(response.body);
+    return OntologyClass.fromJson(res);
+  } else {
+    throw Exception('Failed to get class');
   }
 }
