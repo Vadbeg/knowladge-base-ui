@@ -114,7 +114,7 @@ class SearchWidget extends State<SearchState> {
                     },
                   );
                 } else {
-                  return CircularProgressIndicator();
+                  return LinearProgressIndicator();
                 }
               })
         ],

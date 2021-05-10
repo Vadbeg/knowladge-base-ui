@@ -77,6 +77,31 @@ class _HomePageState extends State<HomePage> {
       });
     }
 
+    TreeViewTheme _treeViewTheme = TreeViewTheme(
+      expanderTheme: ExpanderThemeData(
+        type: ExpanderType.caret,
+        modifier: ExpanderModifier.none,
+        position: ExpanderPosition.start,
+        color: Colors.red.shade800,
+        size: 20,
+      ),
+      labelStyle: TextStyle(
+        fontSize: 16,
+        letterSpacing: 0.3,
+      ),
+      parentLabelStyle: TextStyle(
+        fontSize: 16,
+        letterSpacing: 0.1,
+        fontWeight: FontWeight.w800,
+        color: Colors.red.shade600,
+      ),
+      iconTheme: IconThemeData(
+        size: 18,
+        color: Colors.grey.shade800,
+      ),
+      colorScheme: ColorScheme.dark(),
+    );
+
     return FutureBuilder<List<OntologyClass>>(
       future: futureClasses,
       builder: (context, snapshot) {
@@ -93,7 +118,7 @@ class _HomePageState extends State<HomePage> {
                   context: context,
                   builder: (BuildContext buildContext) {
                     return MyAlertDialog(
-                      title: 'Actions',
+                      title: 'Class settings',
                       content: 'Dialog content',
                       nodes: nodes,
                       node: selectedNode,
@@ -103,6 +128,7 @@ class _HomePageState extends State<HomePage> {
                     );
                   });
             },
+            theme: _treeViewTheme
           );
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
@@ -116,7 +142,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title ?? 'Ontology'),
+        title: Text(widget.title ?? 'Knowledge base'),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: [

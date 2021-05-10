@@ -122,7 +122,7 @@ class _AddClassState extends State<AddClassState> {
                   } else if (snapshot.hasError) {
                     return Text("${snapshot.error}");
                   }
-                  return CircularProgressIndicator();
+                  return LinearProgressIndicator();
                 },
               ),
             ],

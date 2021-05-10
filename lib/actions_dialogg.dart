@@ -71,7 +71,7 @@ class MyAlertDialog extends StatelessWidget {
             onPressed: () {
               navigateToAddClass(context);
             },
-            child: Text("add subclass")),
+            child: Text("add subclass ")),
         TextButton(
             onPressed: () {
               if (node.key == "root" ||
@@ -86,7 +86,7 @@ class MyAlertDialog extends StatelessWidget {
               Navigator.of(context).pushNamedAndRemoveUntil(
                   '/', (Route<dynamic> route) => false);
             },
-            child: Text("remove(only leaf)")),
+            child: Text("remove(only leaf) ")),
         TextButton(
             onPressed: () {
               if (node.key == "root") {
@@ -96,7 +96,7 @@ class MyAlertDialog extends StatelessWidget {
               }
               navigateToViewClass(context);
             },
-            child: Text("view/edit")),
+            child: Text("view/edit ")),
       ]),
     );
   }
